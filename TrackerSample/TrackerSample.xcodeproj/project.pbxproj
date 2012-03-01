@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FE4891614FEFD5500F3F1F9 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4891514FEFD5500F3F1F9 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		493B86A114930FA0000AC7DD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 493B86A014930FA0000AC7DD /* CoreLocation.framework */; };
 		493C097D149D8BE300F2D05A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 493C097C149D8BE300F2D05A /* CoreFoundation.framework */; };
 		496F6E42149DEED100FD050F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 496F6E41149DEED100FD050F /* libsqlite3.dylib */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FE4891414FEFD5500F3F1F9 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = JSONKit/JSONKit.h; sourceTree = SOURCE_ROOT; };
+		0FE4891514FEFD5500F3F1F9 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = JSONKit/JSONKit.m; sourceTree = SOURCE_ROOT; };
 		493B86A014930FA0000AC7DD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		493C097C149D8BE300F2D05A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		496F6E41149DEED100FD050F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -88,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FE488FC14FECB0400F3F1F9 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				0FE4891414FEFD5500F3F1F9 /* JSONKit.h */,
+				0FE4891514FEFD5500F3F1F9 /* JSONKit.m */,
+			);
+			name = JSONKit;
+			sourceTree = "<group>";
+		};
 		497120C11490755B0046BDA3 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +136,7 @@
 		497120D61490755C0046BDA3 /* TrackerSample */ = {
 			isa = PBXGroup;
 			children = (
+				0FE488FC14FECB0400F3F1F9 /* JSONKit */,
 				49A878E2149D34D200B7D168 /* LQConfig.h */,
 				497120DF1490755C0046BDA3 /* TrackerSampleAppDelegate.h */,
 				497120E01490755C0046BDA3 /* TrackerSampleAppDelegate.m */,
@@ -275,6 +288,7 @@
 				497120DD1490755C0046BDA3 /* main.m in Sources */,
 				497120E11490755C0046BDA3 /* TrackerSampleAppDelegate.m in Sources */,
 				497120E41490755C0046BDA3 /* TrackerSampleViewController.m in Sources */,
+				0FE4891614FEFD5500F3F1F9 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,11 +400,16 @@
 		497121031490755C0046BDA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TrackerSample/TrackerSample-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../\"";
 				INFOPLIST_FILE = "TrackerSample/TrackerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../GeoloqiSDK\"";
 				OTHER_LDFLAGS = (
 					"-lGeoloqi-$(CONFIGURATION)",
@@ -404,11 +423,16 @@
 		497121041490755C0046BDA3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TrackerSample/TrackerSample-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../\"";
 				INFOPLIST_FILE = "TrackerSample/TrackerSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../GeoloqiSDK\"";
 				OTHER_LDFLAGS = (
 					"-lGeoloqi-$(CONFIGURATION)",
