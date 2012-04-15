@@ -97,6 +97,7 @@
 
 //Read this if you need to send the access token off to another api or you prefer to do your own persistence
 @property (nonatomic, strong, readonly) NSString *accessToken;
+@property (nonatomic, strong, readonly) NSString *userID;
 
 /**
  * By default, a session creates an NSOperationQueue to talk to the server. If you want your own queue, you can do that here.

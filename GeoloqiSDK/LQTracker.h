@@ -39,7 +39,6 @@ typedef enum {
 	 */
 	LQTrackerProfileRealtime = 3, // --available in v2
 
-	
 } LQTrackerProfile;
 
 typedef enum {
@@ -58,6 +57,8 @@ typedef enum {
 + (id)sharedTracker;
 
 + (void)configureAnonymousUserAccountWithUserInfo:(NSDictionary *)userInfo profile:(LQTrackerProfile)profile;
+
++ (NSString *)profileValueToString:(LQTrackerProfile)profile;
 
 //Once you have a valid session, set it here so location updates can be uploaded to the server
 @property (nonatomic, strong) LQSession *session;
