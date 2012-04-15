@@ -34,4 +34,3 @@ You will need to:
 * Handle push notification registration if needed
 * Choose a tracking mode to get started
 
-
