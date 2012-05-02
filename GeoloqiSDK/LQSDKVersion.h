@@ -6,7 +6,7 @@
 //
 
 
-static NSString *const LQSDKVersionString = @"12.106";
+static NSString *const LQSDKVersionString = @"12.123";
 
 // This build string is automatically updated when the sdk is built! Do not modify.
-static NSString *const LQSDKVersionGitVersion = @"dd441f4ee32ab53057c7cf32c42cd786361a13fa";
+static NSString *const LQSDKVersionGitVersion = @"5f69b2241e11184cdae59e309a6be9a3f6380ad8";
