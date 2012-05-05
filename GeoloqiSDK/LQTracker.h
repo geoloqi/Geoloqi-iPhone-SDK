@@ -66,6 +66,9 @@ typedef enum {
 //Pre-check a profile to switch to instead of triggering an error state
 - (BOOL)canSwitchToProfile:(LQTrackerProfile)profile error:(NSError **)error;
 
+// Tell the SDK the user is currently interacting with the app, which gives it a chance to re-register location updates if needed
+- (void)appDidBecomeActive;
+
 @property (nonatomic) LQTrackerProfile profile;
 
 //What is the tracker doing now?
@@ -76,15 +79,6 @@ typedef enum {
 //Use these to determine when location data is synced up to the server
 @property (nonatomic, strong, readonly) NSDate *dateOfLastLocationUpdate;
 @property (nonatomic, strong, readonly) NSDate *dateOfLastSyncedLocationUpdate;
-
-//Attempt to delete all location updates cached on the device. An error may be returned in case this fails for some reason
-//- (void)deleteAllPersonalDataWithCompletion:(void (^)(NSError *dataDeletionError))block;
-
-// Local geofencing
-@property (nonatomic, strong) CLRegion *refreshTriggersRegion;
-@property (nonatomic, strong) NSDate *refreshTriggersDate;
-- (void)refreshNearbyTriggers;
-- (void)processTriggersForLocation:(CLLocation *)location;
 
 @end
 
