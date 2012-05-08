@@ -48,6 +48,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    // Tell the SDK the user is currently interacting with the app, which gives it a chance to re-register location updates if needed
+    [[LQTracker sharedTracker] appDidBecomeActive];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

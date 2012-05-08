@@ -17,16 +17,16 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
-- (void)runAnotherRequest;
-{
-	LQSession *blahSession = [[LQSession alloc] init];
-	
-	NSURLRequest *r = [blahSession requestWithMethod:@"GET" path:@"/account/username?username=aaronpk" payload:nil];
-	[blahSession runAPIRequest:r completion:^(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error) {
-		NSLog(@"Response: %@ error:%@", responseDictionary, error);
-	}];
-	
+- (void)registerForPushNotifications {
+    [LQSession registerForPushNotificationsWithCallback:^(NSData *deviceToken, NSError *error) {
+        if(error){
+            NSLog(@"Failed to register for push tokens: %@", error);
+        } else {
+            NSLog(@"Got a push token! %@", deviceToken);
+        }
+    }];
 }
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -52,7 +52,6 @@
     
     // If a user account has already been created, this will resume the tracker in the last state
     // it was left in when the app last quit.
-
     [LQTracker configureAnonymousUserAccountWithUserInfo:nil profile:LQTrackerProfileOff];
 
     // Tell the SDK the app finished launching so it can properly handle push notifications, etc
