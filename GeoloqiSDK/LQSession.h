@@ -8,11 +8,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef enum {
+	LQPushNotificationModeLive = 0,
+	LQPushNotificationModeDev = 1
+} LQPushNotificationMode;
+
 @protocol LQAPIObject <NSObject>
 - (id)initWithSerializedRepresentation:(NSDictionary *)dictionary;
 - (NSDictionary *)serializedRepresentation;
 @end
-
 
 /**
  * LQSession is a wrapper around the Geoloqi Web Service API, providing authentication and asynchronous APIs for making web services.
@@ -37,6 +41,7 @@
  * Pass off the didRegisterForRemoteNotifications call to the SDK
  */
 + (void)registerDeviceToken:(NSData *)deviceToken;
++ (void)registerDeviceToken:(NSData *)deviceToken withMode:(LQPushNotificationMode)mode;
 + (void)handleDidFailToRegisterForRemoteNotifications:(NSError *)error;
 
 /** 
@@ -64,12 +69,6 @@
 + (LQSession *)savedSession;
 
 /**
- * Creates an LQSession object given an existing access token that is stored in
- * some sort of permanent storage on the phone or an external API.
- */
-+ (LQSession *)sessionWithAccessToken:(NSString *)inAccessToken;
-
-/**
  * Log in to an existing Geoloqi account given a username and password.
  */
 + (id)requestSessionWithUsername:(NSString *)username
@@ -95,9 +94,11 @@
 						  extra:(NSDictionary *)extraData
 					 completion:(void (^)(LQSession *session, NSError *error))block;
 
-//Read this if you need to send the access token off to another api or you prefer to do your own persistence
+//Read this if you need to send the access token off to another api
 @property (nonatomic, strong, readonly) NSString *accessToken;
 @property (nonatomic, strong, readonly) NSString *userID;
+@property (nonatomic, strong, readonly) NSString *username;
+@property (nonatomic, readonly) BOOL isAnonymous;
 
 /**
  * By default, a session creates an NSOperationQueue to talk to the server. If you want your own queue, you can do that here.
@@ -123,7 +124,9 @@
  * OAuth 2.0 authorization is implemented automatically.
  */
 
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)httpMethod path:(NSString *)requestPath payload:(id)object;
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)httpMethod 
+                                      path:(NSString *)requestPath 
+                                   payload:(id)object;
 
 /**
  * -runAPIRequest:completion: will attempt to load the resource specified by the request parameter from the geoloqi server.
@@ -131,18 +134,13 @@
  * while the response paramater may still contain the response recieved as applicable.
  */
 
-- (id)runAPIRequest:(NSURLRequest *)inRequest completion:(void (^)(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error))block;
+- (id)runAPIRequest:(NSURLRequest *)inRequest 
+         completion:(void (^)(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error))block;
 
 @end
 
 
 @interface LQSession (LQSession_Settings)
-
-/**
- * If you don't want to use Geoloqi's push notification implementation, call +setPushDisabled:YES before you create an LQSession.
- */
-+ (BOOL)pushDisabled;
-+ (void)setPushDisabled:(BOOL)isPushDisabled;
 
 @end
 

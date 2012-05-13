@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#pragma mark - Tracking Profiles
+
 /*
  The profile determines the overall behaviour of the LQTracker. See the documentation at <> for more information
  */
@@ -49,6 +51,42 @@ typedef enum {
 	LQTrackerStatusLive,
 } LQTrackerStatus;
 
+#pragma mark - Events / Notifications
+
+/**
+ * Events / Notifications
+
+ The Geoloqi SDK provides a few events you can listen to in case you want to observe the SDK functionality.
+ 
+ You can listen for these events in a view controller to provide feedback about the tracker to the user. For example,
+ 
+ - (void)viewDidAppear:(BOOL)animated {
+     [super viewDidAppear:animated];
+     [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector(sdkDidUploadLocation:)
+                                                  name:LQTrackerDidUploadLocationNotification
+                                                object:nil];
+ }
+ 
+ - (void)viewDidDisappear:(BOOL)animated {
+     [super viewDidDisappear:animated];
+     
+     [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                     name:LQTrackerDidUploadLocationNotification
+                                                   object:nil];
+ }
+ 
+ */
+// This notification is posted when LQTracker records a location update
+static NSString *const LQTrackerLocationChangedNotification = @"com.geoloqi.LQTrackerLocationChangedNotification";
+
+// This notification is posted when LQTracker finishes uploading location data
+static NSString *const LQTrackerDidUploadLocationNotification = @"com.geoloqi.LQTrackerDidUploadLocationNotification";
+
+// This notification is posted when LQTracker changes tracking profiles
+static NSString *const LQTrackerDidChangeTrackingProfileNotification = @"com.geoloqi.LQTrackerDidChangeTrackingProfileNotification";
+
+#pragma mark - LQTracker Methods
 
 @class LQSession;
 
@@ -60,14 +98,22 @@ typedef enum {
 
 + (NSString *)profileValueToString:(LQTrackerProfile)profile;
 
-//Once you have a valid session, set it here so location updates can be uploaded to the server
+// Once you have a valid session, set it here so location updates can be uploaded to the server
 @property (nonatomic, strong) LQSession *session;
 
-//Pre-check a profile to switch to instead of triggering an error state
+// Pre-check a profile to switch to instead of triggering an error state
 - (BOOL)canSwitchToProfile:(LQTrackerProfile)profile error:(NSError **)error;
 
 // Tell the SDK the user is currently interacting with the app, which gives it a chance to re-register location updates if needed
 - (void)appDidBecomeActive;
+
+// Uploads the local location buffer if enough time has elapsed, depending on the tracking mode
+- (void)uploadLocationQueueIfNecessary;
+
+// Forces the local location buffer to be uploaded immediately
+- (void)uploadLocationQueue;
+
+#pragma mark - Properties
 
 @property (nonatomic) LQTrackerProfile profile;
 
@@ -81,9 +127,4 @@ typedef enum {
 @property (nonatomic, strong, readonly) NSDate *dateOfLastSyncedLocationUpdate;
 
 @end
-
-
-//The tracker just recorded a point of data
-extern NSString *LQTrackerDidRecordLocationNotification;
-
 

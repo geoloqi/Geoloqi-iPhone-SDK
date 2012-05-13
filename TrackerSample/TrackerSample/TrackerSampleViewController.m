@@ -13,7 +13,8 @@
 @synthesize currentTrackingProfile;
 @synthesize pushNotificationStatus;
 @synthesize registerForPushButton;
-@synthesize currentLocationField, currentLocationActivityIndicator;
+@synthesize currentLocationField, currentLatLngLabel;
+@synthesize currentLocationActivityIndicator;
 @synthesize pushNotificationAlerts, pushNotificationBadges, pushNotificationSounds;
 
 - (void)didReceiveMemoryWarning
@@ -41,6 +42,11 @@
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sdkLocationChanged:)
+                                                 name:LQTrackerLocationChangedNotification
+                                               object:nil];
+    
     self.currentTrackingProfile.selectedSegmentIndex = [self segmentIndexForTrackingProfile:[[LQTracker sharedTracker] profile]];
     [self refreshPushNotificationStatus];
 }
@@ -56,6 +62,11 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:LQTrackerLocationChangedNotification
+                                                  object:nil];
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -64,6 +75,12 @@
 }
 
 #pragma mark -
+
+- (void)sdkLocationChanged:(NSNotification *)sender
+{
+    CLLocation *location = sender.object;
+    self.currentLatLngLabel.text = [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude];
+}
 
 - (void)refreshPushNotificationStatus
 {

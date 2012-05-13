@@ -16,6 +16,7 @@
 @property (strong) IBOutlet UIButton *registerForPushButton;
 @property (strong) IBOutlet UILabel *currentLocationField;
 @property (strong) IBOutlet UIActivityIndicatorView *currentLocationActivityIndicator;
+@property (strong) IBOutlet UILabel *currentLatLngLabel;
 
 @property (strong) IBOutlet UIButton *pushNotificationAlerts;
 @property (strong) IBOutlet UIButton *pushNotificationBadges;
