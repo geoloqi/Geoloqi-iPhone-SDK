@@ -98,8 +98,9 @@
 {
     switch(profile) {
         case LQTrackerProfileOff:      return 0;
-        case LQTrackerProfilePassive:  return 1;
-        case LQTrackerProfileRealtime: return 2;
+        case LQTrackerProfileRough:    return 1;
+        case LQTrackerProfileAdaptive: return 2;
+        case LQTrackerProfileRealtime: return 3;
         case LQTrackerProfileLogging:  return 3;
     }
 }
@@ -108,9 +109,9 @@
 {
     switch(index) {
         case 0: return LQTrackerProfileOff;
-        case 1: return LQTrackerProfilePassive;
-        case 2: return LQTrackerProfileRealtime;
-        case 3: return LQTrackerProfileLogging;
+        case 1: return LQTrackerProfileRough;
+        case 2: return LQTrackerProfileAdaptive;
+        case 3: return LQTrackerProfileRealtime;
         default: return LQTrackerProfileOff;
     }
 }

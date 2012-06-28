@@ -94,6 +94,12 @@ typedef enum {
 						  extra:(NSDictionary *)extraData
 					 completion:(void (^)(LQSession *session, NSError *error))block;
 
+/**
+ * Creates an LQSession object given an existing access token that is stored in
+ * some sort of permanent storage on the phone or an external API.
+ */
++ (LQSession *)sessionWithAccessToken:(NSString *)inAccessToken;
+
 //Read this if you need to send the access token off to another api
 @property (nonatomic, strong, readonly) NSString *accessToken;
 @property (nonatomic, strong, readonly) NSString *userID;
