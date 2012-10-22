@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 typedef enum {
 	LQPushNotificationModeLive = 0,
@@ -30,7 +31,7 @@ typedef enum {
 /**
  * Call this method first in your application delegate to set up Geoloqi api.
  */
-+ (void)setAPIKey:(NSString *)APIKey secret:(NSString *)APISecret;
++ (void)setAPIKey:(NSString *)APIKey;
 
 /** 
  * Pass off the applicationDidFinishLaunching call to the SDK
@@ -69,6 +70,19 @@ typedef enum {
 + (LQSession *)savedSession;
 
 /**
+ * since this factory method can potentially make an async API call, this method
+ * can now take a "on complete" block to be called with the session object when
+ * the API request finishes, or immediately after loading session data from disk.
+ */
++ (LQSession *)savedSession:(void (^)(LQSession *session))block;
+
+/**
+ * this is the instance method the factory above may call, to refresh all session
+ * data from the API. if a block is passed, it is called when the request is finished.
+ */
+- (void)reloadSessionData:(void (^)(LQSession *session))block;
+
+/**
  * Log in to an existing Geoloqi account given a username and password.
  */
 + (id)requestSessionWithUsername:(NSString *)username
@@ -85,6 +99,21 @@ typedef enum {
 								  completion:(void (^)(LQSession *session, NSError *error))block;
 
 /**
+ * Create a new anonymous user account with the specified `key` parameter and
+ * automatically subscribe the new user to the specified layers and join the
+ * specified groups.
+ * This is functionally equivalent to the above, but adds the extra parameters
+ * needed to accomplish the subscription, join, and de-duping if provided.
+ *
+ * See https://developers.geoloqi.com/api/user/create_anon
+ */
++ (id)createAnonymousUserAccountWithUserInfo:(NSDictionary *)extraData
+                                         key:(NSString *)key
+                                    layerIds:(NSArray *)layerIds
+                                 groupTokens:(NSArray *)groupTokens
+								  completion:(void (^)(LQSession *session, NSError *error))block;
+
+/**
  * Create a new Geoloqi account with the requested username and password.
  * The Geoloqi API will return an error if there is already a user with the
  * requested username.
@@ -93,6 +122,25 @@ typedef enum {
 					   password:(NSString *)password
 						  extra:(NSDictionary *)extraData
 					 completion:(void (^)(LQSession *session, NSError *error))block;
+
+/**
+ * Create a new Geoloqi account with the requested username and password,
+ * subscribe the new user to the specified layers, and join the specified groups.
+ * The Geoloqi API will return an error if there is already a user with the
+ * requested username.
+ */
++ (id)createAccountWithUsername:(NSString *)username
+					   password:(NSString *)password
+						  extra:(NSDictionary *)extraData
+                       layerIds:(NSArray *)layerIds
+                    groupTokens:(NSArray *)groupTokens
+					 completion:(void (^)(LQSession *session, NSError *error))block;
+
+/**
+ * Creates an LQSession object given an existing access token that is stored in
+ * some sort of permanent storage on the phone or an external API.
+ */
++ (LQSession *)sessionWithAccessToken:(NSString *)inAccessToken;
 
 //Read this if you need to send the access token off to another api
 @property (nonatomic, strong, readonly) NSString *accessToken;
@@ -154,5 +202,20 @@ typedef enum {
 + (void)setDeviceIdentifier:(NSData *)deviceIdentifier;
 
 + (NSString *)deviceIdentifierHexString;
+
+@end
+
+/*  add support for logging to a file that can be retrieved from the device
+ *  (currently, by emailing off) for development purposes.
+ */
+@interface LQSession(LQSession_Logging) <MFMailComposeViewControllerDelegate>
+
+- (BOOL)fileLogging;
+- (void)setFileLogging:(BOOL)enable;
+- (void)viewControllerDidRequestLogEmail:(UIViewController *)viewController;
+- (NSString *)logContents;
+- (void)log:(NSString *)format,...;
+- (void)clearLog;
+- (void)dumpStateToLog;
 
 @end

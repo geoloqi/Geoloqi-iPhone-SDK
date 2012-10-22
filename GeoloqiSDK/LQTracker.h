@@ -26,20 +26,27 @@ typedef enum {
 	 If the network drops out and reconnects, no data is lost.
 	 */
 	LQTrackerProfilePassive = 1,
+    LQTrackerProfileAdaptive = 1,
 	
 	/*
 	 The highest quality data available.
 	 Data is batched on the device, then submitted to the server later.
 	 If the network drops out and reconnects, no data is lost.
 	 */
-	LQTrackerProfileLogging = 2, // --available in v2
+	LQTrackerProfileLogging = 2,
 	
 	/*
 	 The highest quality, most real-time data available.
 	 Data is transmitted as soon as possible with low-latency networking.
 	 Old updates may be dropped as they are no longer relevant. (after N minutes)
 	 */
-	LQTrackerProfileRealtime = 3, // --available in v2
+	LQTrackerProfileRealtime = 3,
+    
+    /*
+     Only gathers "rough" location data, useful to get city or neighborhood-level accuracy.
+     Will only use the "significant location" mode available in iOS, and never turn GPS on.
+     */
+    LQTrackerProfileRough = 4, 
 
 } LQTrackerProfile;
 
@@ -112,6 +119,12 @@ static NSString *const LQTrackerDidChangeTrackingProfileNotification = @"com.geo
 
 // Forces the local location buffer to be uploaded immediately
 - (void)uploadLocationQueue;
+
+// queue a location single update at the current location and send to the API
+- (void)enqueueSingleLocationUpdate;
+
+// tell the tracker to reset the profile; useful for switching user accounts, etc.
+- (void)resetTrackingProfile;
 
 #pragma mark - Properties
 
