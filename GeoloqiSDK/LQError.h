@@ -8,7 +8,7 @@
 extern NSString *const LQErrorDomain;
 
 typedef enum {
-	/* Bad API key or secret*/
+	/* Bad API key */
 	LQErrorInvalidClient = 0,
 	
 	/* */
