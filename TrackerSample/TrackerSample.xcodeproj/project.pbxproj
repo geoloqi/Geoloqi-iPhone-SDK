@@ -28,6 +28,7 @@
 		497120FC1490755C0046BDA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 497120FA1490755C0046BDA3 /* InfoPlist.strings */; };
 		497120FF1490755C0046BDA3 /* TrackerSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 497120FE1490755C0046BDA3 /* TrackerSampleTests.m */; };
 		49E265D514C3949C00B19D71 /* TrackerSampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49E265D314C3949C00B19D71 /* TrackerSampleViewController.xib */; };
+		BED3F815162CDEDF0071D809 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED3F814162CDEDF0071D809 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		497120FE1490755C0046BDA3 /* TrackerSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackerSampleTests.m; sourceTree = "<group>"; };
 		49A878E2149D34D200B7D168 /* LQConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQConfig.h; sourceTree = "<group>"; };
 		49E265D414C3949C00B19D71 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TrackerSampleViewController.xib; sourceTree = "<group>"; };
+		BED3F814162CDEDF0071D809 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED3F815162CDEDF0071D809 /* MessageUI.framework in Frameworks */,
 				496F6E42149DEED100FD050F /* libsqlite3.dylib in Frameworks */,
 				493C097D149D8BE300F2D05A /* CoreFoundation.framework in Frameworks */,
 				493B86A114930FA0000AC7DD /* CoreLocation.framework in Frameworks */,
@@ -111,6 +114,7 @@
 		497120C11490755B0046BDA3 = {
 			isa = PBXGroup;
 			children = (
+				BED3F814162CDEDF0071D809 /* MessageUI.framework */,
 				497120D61490755C0046BDA3 /* TrackerSample */,
 				497120F71490755C0046BDA3 /* TrackerSampleTests */,
 				497120CF1490755B0046BDA3 /* Frameworks */,

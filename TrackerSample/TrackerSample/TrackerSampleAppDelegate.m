@@ -39,8 +39,8 @@
         [[[UIAlertView alloc] initWithTitle:@"You Need an API Key!" message:@"You need an API key from developers.geoloqi.com" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Visit Site", nil] show];
     }
 
-    // Sets your API Key and secret
-	[LQSession setAPIKey:LQ_APIKey secret:LQ_APISecret];
+    // Sets your API Key
+	[LQSession setAPIKey:LQ_APIKey];
 
     // Creates a user account if not already set up.
 
@@ -52,8 +52,42 @@
     
     // If a user account has already been created, this will resume the tracker in the last state
     // it was left in when the app last quit.
-    [LQTracker configureAnonymousUserAccountWithUserInfo:nil profile:LQTrackerProfileOff];
-
+    if([LQSession savedSession]) {
+        // Call [LQTracker sharedTracker] which will cause it to resume tracking in the previous state
+        [LQTracker sharedTracker];
+        // Re-register for push notifications so we tell the server the user is still using the app
+        [LQSession registerForPushNotificationsWithCallback:NULL];
+    } else {
+        // Create a new anonymous account. You can pass an NSDictionary with custom user info if you wish
+        [LQSession createAnonymousUserAccountWithUserInfo:nil completion:^(LQSession *session, NSError *error) {
+            if(error) {
+                NSLog(@"ERROR: Failed to create account: %@", error);
+            } else {
+                // Save the session to disk so it will be restored on next launch
+                [LQSession setSavedSession:session];
+                
+                // Now register for push notifications
+                // After the user approves, the app delegate method didRegisterForRemoteNotificationsWithDeviceToken will be called
+                [LQSession registerForPushNotificationsWithCallback:^(NSData *deviceToken, NSError *error) {
+                    if(error){
+                        NSLog(@"Failed to register for push tokens: %@", error);
+                    } else {
+                        NSLog(@"Got a push token! %@", deviceToken);
+                    }
+                }];
+                
+                // Start tracking
+                [[LQTracker sharedTracker] setProfile:LQTrackerProfileAdaptive];
+                
+                // Note: You may not want to start tracking right here, and you may not want to register for push notifications now either.
+                // You are better off putting off these until you absolutely need to, since they will show a popup prompt to the user.
+                // It is somewhat annoying to see two prompts in a row before even getting a chance to use the app, so you should wait
+                // until you need to show a map or until the user turns "on" some functionality before prompting for location access
+                // and push notification permission.
+            }
+        }];
+    }
+    
     // Tell the SDK the app finished launching so it can properly handle push notifications, etc
     [LQSession application:application didFinishLaunchingWithOptions:launchOptions];
 
