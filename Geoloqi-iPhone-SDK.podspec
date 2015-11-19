@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
     :tag => "15.231"
   }
 
-  s.source_files  = "GeoloqiSDK/*.h"
+  s.source_files  = "GeoloqiSDK/*"
   s.frameworks  = "CoreLocation", "MessageUI"
   s.libraries = "sqlite3", "Geoloqi-$(CONFIGURATION)"
   s.requires_arc = false
