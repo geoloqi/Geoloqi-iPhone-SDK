@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Geoloqi-iPhone-SDK"
-  s.version      = "12.297"
+  s.version      = "15.231"
   s.summary      = "Sample iPhone app using the Geoloqi iPhone SDK"
 
   s.description  = <<-DESC
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "5.0"
   s.source       = {
     :git => "https://github.com/geoloqi/Geoloqi-iPhone-SDK.git",
-    :tag => "12.296"
+    :tag => "15.231"
   }
 
   #s.source_files  = "GeoloqiSDK/*.h"
