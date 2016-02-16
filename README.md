@@ -7,7 +7,7 @@ Also see our [Getting Started Guide](https://developers.geoloqi.com/ios/getting-
 Sample App
 ----------
 
-The Sample iPhone app project will get you started quickly using the SDK. When you open the XCode project, all you need to do is fill in your API key in `LQConfig.h`, which you can get from our [developer site](https://developers.geoloqi.com/get-an-api-key).
+The Sample iPhone app project will get you started quickly using the SDK. When you open the Xcode project, all you need to do is fill in your API key in `LQConfig.h`, which you can get from our [developer site](https://developers.geoloqi.com/get-an-api-key).
 
 ![API Key and Secret](https://developer-site-content.geoloqi.com/wiki/images/thumb/0/06/TrackerSample_set_your_api_key_and_secret.png/670px-TrackerSample_set_your_api_key_and_secret.png)
 
